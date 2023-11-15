@@ -20,6 +20,24 @@ class App extends Component {
   apiKey = '40510236-388f5567c4a0a863bef97b410';
   apiUrl = `https://pixabay.com/api/?key=${this.apiKey}&image_type=photo&orientation=horizontal&per_page=12`;
 
+  prevSearchQuery = '';
+
+  componentDidUpdate(prevProps, prevState) {
+    const { searchQuery, page } = this.state;
+
+    if (searchQuery !== prevState.searchQuery || page !== prevState.page) {
+      this.fetchImages();
+    }
+
+    if (this.props.someProp !== prevProps.someProp) {
+      console.log(
+        'Зміна searchQuery:',
+        prevProps.searchQuery,
+        this.props.searchQuery
+      );
+    }
+  }
+
   handleSearch = async query => {
     await this.setState({
       searchQuery: query,
